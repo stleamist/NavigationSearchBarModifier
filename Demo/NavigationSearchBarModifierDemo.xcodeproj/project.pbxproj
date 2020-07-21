@@ -16,6 +16,7 @@
 		C7AB88E624C69F820083C525 /* NavigationSearchBarModifier in Frameworks */ = {isa = PBXBuildFile; productRef = C7AB88E524C69F820083C525 /* NavigationSearchBarModifier */; };
 		C7AB88E824C69FE10083C525 /* Grocery.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AB88E724C69FE10083C525 /* Grocery.swift */; };
 		C7AB88EA24C6A0510083C525 /* SampleGroceries.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AB88E924C6A0510083C525 /* SampleGroceries.swift */; };
+		C7AEA59324C6ACD0002BDE84 /* GroceryRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7AEA59224C6ACD0002BDE84 /* GroceryRow.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,6 +30,7 @@
 		C7AB88DE24C69F250083C525 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C7AB88E724C69FE10083C525 /* Grocery.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Grocery.swift; sourceTree = "<group>"; };
 		C7AB88E924C6A0510083C525 /* SampleGroceries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleGroceries.swift; sourceTree = "<group>"; };
+		C7AEA59224C6ACD0002BDE84 /* GroceryRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroceryRow.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 				C7AB88D024C69F240083C525 /* AppDelegate.swift */,
 				C7AB88D224C69F240083C525 /* SceneDelegate.swift */,
 				C7AB88D424C69F240083C525 /* GroceryList.swift */,
+				C7AEA59224C6ACD0002BDE84 /* GroceryRow.swift */,
 				C7AB88E724C69FE10083C525 /* Grocery.swift */,
 				C7AB88E924C6A0510083C525 /* SampleGroceries.swift */,
 				C7AB88D624C69F250083C525 /* Assets.xcassets */,
@@ -168,6 +171,7 @@
 				C7AB88D324C69F240083C525 /* SceneDelegate.swift in Sources */,
 				C7AB88D524C69F240083C525 /* GroceryList.swift in Sources */,
 				C7AB88EA24C6A0510083C525 /* SampleGroceries.swift in Sources */,
+				C7AEA59324C6ACD0002BDE84 /* GroceryRow.swift in Sources */,
 				C7AB88E824C69FE10083C525 /* Grocery.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -1,10 +1,10 @@
 import Swift
 
 let sampleGroceries = [
-    Grocery(name: "Apple"),
-    Grocery(name: "Banana"),
-    Grocery(name: "Carrot"),
-    Grocery(name: "Grape"),
-    Grocery(name: "Peach"),
-    Grocery(name: "Potato")
+    Grocery(emoji: "🍎", name: "Apple", category: .fruit),
+    Grocery(emoji: "🍌", name: "Banana", category: .fruit),
+    Grocery(emoji: "🥕", name: "Carrot", category: .vegetable),
+    Grocery(emoji: "🍇", name: "Grape", category: .fruit),
+    Grocery(emoji: "🍑", name: "Peach", category: .fruit),
+    Grocery(emoji: "🥔", name: "Potato", category: .vegetable)
 ]

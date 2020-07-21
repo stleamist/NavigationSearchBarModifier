@@ -9,6 +9,7 @@ import NavigationSearchBarModifier
 struct GroceryList: View {
     
     let groceries: [Grocery]
+    @State private var searchControllerIsPresented = false
     @State private var searchTerm: String?
     private var scopes: [String]? = ["Fruit", "Vegetable"]
     @State private var selectedScope: Int = 0
@@ -30,9 +31,11 @@ struct GroceryList: View {
             }
             .navigationBarTitle("Groceries")
             .navigationSearchBar(
+                searchControllerIsPresented: $searchControllerIsPresented,
                 searchTerm: $searchTerm,
-                scopes: scopes,
-                selectedScope: $selectedScope
+                searchScopes: scopes,
+                selectedSearchScope: $selectedScope,
+                hidesWhenScrolling: true
             )
         }
     }

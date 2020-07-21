@@ -3,12 +3,19 @@ import NavigationSearchBarModifier
 
 struct GroceryList: View {
     
+    enum Scope: String, CaseIterable {
+        case all
+        case fruit
+        case vegetable
+    }
+    
     let groceries: [Grocery] = sampleGroceries
+    @State private var searchControllerIsPresented = false
     @State private var searchTerm: String?
-    private var scopes: [String]? = ["Fruit", "Vegetable"]
+    private var scopes: [String] = Scope.allCases.map(\.rawValue)
     @State private var selectedScope: Int = 0
     
-    private var predicate: (Grocery) -> Bool {
+    private var searchTermPredicate: (Grocery) -> Bool {
         if let searchTerm = searchTerm, !searchTerm.isEmpty {
             return { grocery in
                 grocery.name.localizedCaseInsensitiveContains(searchTerm)
@@ -18,17 +25,42 @@ struct GroceryList: View {
         }
     }
     
+    private var categoryPredicate: (Grocery) -> Bool {
+        let selectedScopeRawValue = scopes[selectedScope]
+        let selectedScope = Scope(rawValue: selectedScopeRawValue)!
+        
+        switch selectedScope {
+        case .all: return { _ in true }
+        case .fruit: return { grocery in grocery.category == .fruit }
+        case .vegetable: return { grocery in grocery.category == .vegetable }
+        }
+    }
+    
+    private var filteredGroceries: [Grocery] {
+        var groceries = self.groceries
+        if searchControllerIsPresented {
+            groceries = groceries.filter(searchTermPredicate)
+            groceries = groceries.filter(categoryPredicate)
+        }
+        return groceries
+    }
+    
     var body: some View {
         NavigationView {
-            List(groceries.filter(predicate)) { grocery in
-                Text(grocery.name)
+            List(filteredGroceries) { grocery in
+                GroceryRow(grocery: grocery)
             }
             .navigationBarTitle("Groceries")
             .navigationSearchBar(
+                searchControllerIsPresented: $searchControllerIsPresented,
                 searchTerm: $searchTerm,
-                scopes: scopes,
-                selectedScope: $selectedScope
+                searchScopes: scopes,
+                selectedSearchScope: $selectedScope,
+                hidesWhenScrolling: true
             )
+        }
+        .onChange(of: searchControllerIsPresented) { value in
+            print(value)
         }
     }
 }
