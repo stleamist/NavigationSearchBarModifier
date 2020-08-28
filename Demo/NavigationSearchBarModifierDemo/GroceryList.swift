@@ -59,9 +59,6 @@ struct GroceryList: View {
                 hidesWhenScrolling: true
             )
         }
-        .onChange(of: searchControllerIsPresented) { value in
-            print(value)
-        }
     }
 }
 
