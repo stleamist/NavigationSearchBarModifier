@@ -1,0 +1,33 @@
+# For more information about the environments, see https://github.com/actions/virtual-environments/blob/main/images/macos/macos-10.15-Readme.md
+
+name: Build for the latest iOS
+
+on:
+  push:
+    branches: '**'
+  pull_request:
+    branches: '**'
+
+jobs:
+  build:
+    name: Build ${{ matrix.scheme }}
+    runs-on: macos-latest
+    
+    env:
+      workspace: NavigationSearchBarModifier.xcworkspace
+      custom_developer_dir: ${{ null }}
+    
+    strategy:
+      matrix:
+        scheme: [NavigationSearchBarModifier, NavigationSearchBarModifierDemo]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        
+      - name: Switch developer directory to ${{ env.custom_developer_dir }}
+        if: ${{ env.custom_developer_dir != null }}
+        run: sudo xcode-select --switch "${{ env.custom_developer_dir }}"
+        
+      - name: Build ${{ matrix.scheme }}
+        run: xcodebuild build-for-testing -workspace "${{ env.workspace }}" -scheme "${{ matrix.scheme }}" -sdk iphonesimulator
