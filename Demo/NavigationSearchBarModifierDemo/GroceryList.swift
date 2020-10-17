@@ -53,6 +53,7 @@ struct GroceryList: View {
             .navigationBarTitle("Groceries")
             .navigationSearchBar(
                 searchControllerIsPresented: $searchControllerIsPresented,
+                placeholder: "Search groceries",
                 searchTerm: $searchTerm,
                 searchScopes: scopes,
                 selectedSearchScope: $selectedScope,

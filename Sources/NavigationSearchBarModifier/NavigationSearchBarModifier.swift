@@ -3,6 +3,7 @@ import SwiftUI
 struct NavigationSearchBarHosting: UIViewControllerRepresentable {
     
     @Binding var searchControllerIsPresented: Bool
+    var placeholder: String?
     @Binding var searchTerm: String?
     var scopes: [String]?
     @Binding var selectedScope: Int
@@ -54,6 +55,10 @@ struct NavigationSearchBarHosting: UIViewControllerRepresentable {
             
             searchController.obscuresBackgroundDuringPresentation = false
             
+            if parent.placeholder != nil {
+                searchController.searchBar.placeholder = parent.placeholder
+            }
+            
             // showsScopeBar가 false일 때는 덮어씌우지 않는다.
             if parent.showsScopeBar == true {
                 // updateUIViewController()에서 showsScopeBar를 설정하면
@@ -88,6 +93,7 @@ struct NavigationSearchBarHosting: UIViewControllerRepresentable {
 struct NavigationSearchBarModifier: ViewModifier {
     
     @Binding var searchControllerIsPresented: Bool
+    var placeholder: String?
     @Binding var searchTerm: String?
     var scopes: [String]?
     @Binding var selectedScope: Int
@@ -98,6 +104,7 @@ struct NavigationSearchBarModifier: ViewModifier {
         content.background(
             NavigationSearchBarHosting(
                 searchControllerIsPresented: $searchControllerIsPresented,
+                placeholder: placeholder,
                 searchTerm: $searchTerm,
                 scopes: scopes,
                 selectedScope: $selectedScope,
@@ -112,12 +119,14 @@ public extension View {
     
     func navigationSearchBar(
         searchControllerIsPresented: Binding<Bool>,
+        placeholder: String? = nil,
         searchTerm: Binding<String?>,
         hidesWhenScrolling: Bool = true
     ) -> some View {
         self.modifier(
             NavigationSearchBarModifier(
                 searchControllerIsPresented: searchControllerIsPresented,
+                placeholder: placeholder,
                 searchTerm: searchTerm,
                 scopes: nil,
                 selectedScope: .constant(0),
@@ -129,6 +138,7 @@ public extension View {
     
     func navigationSearchBar(
         searchControllerIsPresented: Binding<Bool>,
+        placeholder: String? = nil,
         searchTerm: Binding<String?>,
         searchScopes: [String]?,
         selectedSearchScope: Binding<Int>,
@@ -137,6 +147,7 @@ public extension View {
         self.modifier(
             NavigationSearchBarModifier(
                 searchControllerIsPresented: searchControllerIsPresented,
+                placeholder: placeholder,
                 searchTerm: searchTerm,
                 scopes: searchScopes,
                 selectedScope: selectedSearchScope,
@@ -148,6 +159,7 @@ public extension View {
     
     func navigationSearchBar(
         searchControllerIsPresented: Binding<Bool>,
+        placeholder: String? = nil,
         searchTerm: Binding<String?>,
         scopes: [String]?,
         selectedScope: Binding<Int>
@@ -155,6 +167,7 @@ public extension View {
         self.modifier(
             NavigationSearchBarModifier(
                 searchControllerIsPresented: searchControllerIsPresented,
+                placeholder: placeholder,
                 searchTerm: searchTerm,
                 scopes: scopes,
                 selectedScope: selectedScope,
