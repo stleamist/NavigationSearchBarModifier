@@ -30,6 +30,16 @@ struct NavigationSearchBarHosting: UIViewControllerRepresentable {
         var parent: NavigationSearchBarHosting
         let searchController: UISearchController
         
+        private var parentSearchTerm: String? {
+            didSet {
+                // 이전 값과 비교하여 불필요하게 Binding의 set 클로저가 호출되는 것을 막는다.
+                guard parentSearchTerm != oldValue else {
+                    return
+                }
+                parent.searchTerm = parentSearchTerm
+            }
+        }
+        
         init(_ navigationSearchBarHosting: NavigationSearchBarHosting) {
             self.parent = navigationSearchBarHosting
             self.searchController = UISearchController()
@@ -65,7 +75,7 @@ struct NavigationSearchBarHosting: UIViewControllerRepresentable {
         
         // UISearchResultsUpdating
         func updateSearchResults(for searchController: UISearchController) {
-            parent.searchTerm = searchController.searchBar.text
+            parentSearchTerm = searchController.searchBar.text
         }
         
         // UISearchBarDelegate
