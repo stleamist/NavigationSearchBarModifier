@@ -156,24 +156,4 @@ public extension View {
             )
         )
     }
-    
-    func navigationSearchBar(
-        placeholder: String? = nil,
-        searchTerm: Binding<String?>,
-        scopes: [String]?,
-        selectedScope: Binding<Int>,
-        onPresentationChange: @escaping (Bool) -> Void = { _ in }
-    ) -> some View {
-        self.modifier(
-            NavigationSearchBarModifier(
-                placeholder: placeholder,
-                searchTerm: searchTerm,
-                scopes: scopes,
-                selectedScope: selectedScope,
-                hidesWhenScrolling: false,
-                showsScopeBar: true,
-                onPresentationChange: onPresentationChange
-            )
-        )
-    }
 }
