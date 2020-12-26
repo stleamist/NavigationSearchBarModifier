@@ -52,12 +52,12 @@ struct GroceryList: View {
             }
             .navigationBarTitle("Groceries")
             .navigationSearchBar(
-                searchControllerIsPresented: $searchControllerIsPresented,
                 placeholder: "Search groceries",
                 searchTerm: $searchTerm,
                 searchScopes: scopes,
                 selectedSearchScope: $selectedScope,
-                hidesWhenScrolling: true
+                hidesWhenScrolling: true,
+                onPresentationChange: { searchControllerIsPresented = $0 }
             )
         }
     }

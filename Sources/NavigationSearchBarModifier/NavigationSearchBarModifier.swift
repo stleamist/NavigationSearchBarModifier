@@ -2,13 +2,13 @@ import SwiftUI
 
 struct NavigationSearchBarHosting: UIViewControllerRepresentable {
     
-    @Binding var searchControllerIsPresented: Bool
     var placeholder: String?
     @Binding var searchTerm: String?
     var scopes: [String]?
     @Binding var selectedScope: Int
     var hidesWhenScrolling: Bool
     var showsScopeBar: Bool
+    var onPresentationChange: ((Bool) -> Void)?
     
     func makeUIViewController(context: Context) -> UIViewController {
         return UIViewController()
@@ -71,11 +71,11 @@ struct NavigationSearchBarHosting: UIViewControllerRepresentable {
         
         // UISearchControllerDelegate
         func didPresentSearchController(_ searchController: UISearchController) {
-            parent.searchControllerIsPresented = true
+            parent.onPresentationChange?(true)
         }
         
         func didDismissSearchController(_ searchController: UISearchController) {
-            parent.searchControllerIsPresented = false
+            parent.onPresentationChange?(false)
         }
         
         // UISearchResultsUpdating
@@ -92,24 +92,24 @@ struct NavigationSearchBarHosting: UIViewControllerRepresentable {
 
 struct NavigationSearchBarModifier: ViewModifier {
     
-    @Binding var searchControllerIsPresented: Bool
     var placeholder: String?
     @Binding var searchTerm: String?
     var scopes: [String]?
     @Binding var selectedScope: Int
     var hidesWhenScrolling: Bool
     var showsScopeBar: Bool
+    var onPresentationChange: ((Bool) -> Void)?
     
     func body(content: Content) -> some View {
         content.background(
             NavigationSearchBarHosting(
-                searchControllerIsPresented: $searchControllerIsPresented,
                 placeholder: placeholder,
                 searchTerm: $searchTerm,
                 scopes: scopes,
                 selectedScope: $selectedScope,
                 hidesWhenScrolling: hidesWhenScrolling,
-                showsScopeBar: showsScopeBar
+                showsScopeBar: showsScopeBar,
+                onPresentationChange: onPresentationChange
             )
         )
     }
@@ -118,61 +118,61 @@ struct NavigationSearchBarModifier: ViewModifier {
 public extension View {
     
     func navigationSearchBar(
-        searchControllerIsPresented: Binding<Bool>,
         placeholder: String? = nil,
         searchTerm: Binding<String?>,
-        hidesWhenScrolling: Bool = true
+        hidesWhenScrolling: Bool = true,
+        onPresentationChange: @escaping (Bool) -> Void = { _ in }
     ) -> some View {
         self.modifier(
             NavigationSearchBarModifier(
-                searchControllerIsPresented: searchControllerIsPresented,
                 placeholder: placeholder,
                 searchTerm: searchTerm,
                 scopes: nil,
                 selectedScope: .constant(0),
                 hidesWhenScrolling: hidesWhenScrolling,
-                showsScopeBar: false
+                showsScopeBar: false,
+                onPresentationChange: onPresentationChange
             )
         )
     }
     
     func navigationSearchBar(
-        searchControllerIsPresented: Binding<Bool>,
         placeholder: String? = nil,
         searchTerm: Binding<String?>,
         searchScopes: [String]?,
         selectedSearchScope: Binding<Int>,
-        hidesWhenScrolling: Bool = true
+        hidesWhenScrolling: Bool = true,
+        onPresentationChange: @escaping (Bool) -> Void = { _ in }
     ) -> some View {
         self.modifier(
             NavigationSearchBarModifier(
-                searchControllerIsPresented: searchControllerIsPresented,
                 placeholder: placeholder,
                 searchTerm: searchTerm,
                 scopes: searchScopes,
                 selectedScope: selectedSearchScope,
                 hidesWhenScrolling: hidesWhenScrolling,
-                showsScopeBar: false
+                showsScopeBar: false,
+                onPresentationChange: onPresentationChange
             )
         )
     }
     
     func navigationSearchBar(
-        searchControllerIsPresented: Binding<Bool>,
         placeholder: String? = nil,
         searchTerm: Binding<String?>,
         scopes: [String]?,
-        selectedScope: Binding<Int>
+        selectedScope: Binding<Int>,
+        onPresentationChange: @escaping (Bool) -> Void = { _ in }
     ) -> some View {
         self.modifier(
             NavigationSearchBarModifier(
-                searchControllerIsPresented: searchControllerIsPresented,
                 placeholder: placeholder,
                 searchTerm: searchTerm,
                 scopes: scopes,
                 selectedScope: selectedScope,
                 hidesWhenScrolling: false,
-                showsScopeBar: true
+                showsScopeBar: true,
+                onPresentationChange: onPresentationChange
             )
         )
     }
